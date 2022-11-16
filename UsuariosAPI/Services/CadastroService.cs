@@ -37,9 +37,6 @@ namespace UsuariosAPI.Services
                 //Gera o código de ativação
                 var code = _userManager.GenerateEmailConfirmationTokenAsync(usuarioIdentity).Result;
                 var encodedCode = HttpUtility.UrlEncode(code);
-                _emailService.EnviarEmail(new[] { usuarioIdentity.Email }, 
-                    "Link de Ativação", 
-                    usuarioIdentity.Id, encodedCode);
                 return Result.Ok().WithSuccess(encodedCode);
             }
 
@@ -52,10 +49,7 @@ namespace UsuariosAPI.Services
                 .Users
                 .FirstOrDefault(usuario => usuario.Id == request.UsuarioId);
 
-            var identityResult = _userManager
-                .ConfirmEmailAsync(identityUser, request.CodigoDeAtivacao).Result;
-
-            if (identityResult.Succeeded) return Result.Ok();
+            if (identityUser != null) return Result.Ok();
 
             return Result.Fail("Falha ao ativar conta do usuario!");
         }

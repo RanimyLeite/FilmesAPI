@@ -36,7 +36,7 @@ namespace UsuariosAPI
             );
             //Definição de usodo Identity
             services.AddIdentity<IdentityUser<int>, IdentityRole<int>>(
-                opt => opt.SignIn.RequireConfirmedEmail = true //Colocando a confirmação do email
+                opt => opt.SignIn.RequireConfirmedEmail = false //Colocando a confirmação do email
                 )
                 .AddEntityFrameworkStores<UserDbContext>()
                 .AddDefaultTokenProviders();
